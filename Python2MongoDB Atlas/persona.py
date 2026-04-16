@@ -11,6 +11,13 @@ coleccion = db['persona']
 usuarios = coleccion.find()
 print(f"Total de usuarios: {coleccion.count_documents({})}")
 print("-" * 40)
+
 for u in usuarios:
-    print(f"ID: {u['_id']} | Nombre: {u.get('nombre', '-')} | Apellido: {u.get('apellido', '-')} | Edad: {u.get('edad', '-')} | Ciudad: {u.get('ciudad', '-')} | Vehiculos: {u.get('vehiculos', '-')}")
+    print(f"ID: {u['_id']} | Nombre: {u.get('nombre')} | Apellido: {u.get('apellido')} | Edad: {u.get('edad')} | Ciudad: {u.get('ciudad')}")
     
+    vehiculos = u.get('vehiculos')
+
+    if vehiculos is not None: #objeto null
+        for v in vehiculos:
+            print(f"Vehiculos: {v}")
+    print()
