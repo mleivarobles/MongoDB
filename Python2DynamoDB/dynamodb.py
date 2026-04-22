@@ -11,28 +11,23 @@ dynamodb = boto3.resource(
     aws_session_token=os.getenv('AWS_SESSION_TOKEN')
 )
 
-tabla = dynamodb.Table('usuarios')
+tabla = dynamodb.Table('personas')
 print(tabla.table_status)
 
 # Leer todos los usuarios
 def listar_usuarios():
     respuesta = tabla.scan()
-    usuarios = respuesta['Items']
-    print(f"Total de usuarios: {len(usuarios)}")
+    personas = respuesta['Items']
+    print(f"Total de personas: {len(personas)}")
     print("-" * 40)
-    for u in usuarios:
-        print(f"ID: {u['usuario_id']} | Nombre: {u.get('nombre', '-')} | Apellido: {u.get('apellido', '-')} | Edad: {u.get('edad', '-')}")
+    for u in personas:
+        print(f"ID: {u['rut']} | nombre: {u.get('nombre')} | edad: {u.get('edad')} | ciudad: {u.get('ciudad')}")
 
-# Leer un usuario por ID
-def obtener_usuario(usuario_id):
-    respuesta = tabla.get_item(Key={'usuario_id': usuario_id})
-    usuario = respuesta.get('Item')
-    if usuario:
-        print(f"Usuario encontrado: {usuario}")
-    else:
-        print(f"No existe usuario con ID {usuario_id}")
+        vehiculos = u.get('vehiculos')
+        if vehiculos is not None: #objeto nul
+            for v in vehiculos:
+                print(f"vehiculos: {v}")
+        print()
 
 listar_usuarios()
 print()
-#obtener_usuario(1)   # Juan Soto
-#obtener_usuario(3)   # Sofia
